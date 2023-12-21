@@ -5,7 +5,7 @@ public class CharSort {
         for(int i = 0 ; i < arr.length ; i++){
             for(int j = i+1 ; j < arr.length ; j++){
                 char temp = ' ';
-                if(arr[i]>arr[j]){
+                if(Character.toLowerCase(arr[i])>Character.toLowerCase(arr[j])){
                     temp = arr[i];
                     arr[i] = arr[j];
                     arr[j] = temp;
