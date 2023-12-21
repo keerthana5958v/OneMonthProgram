@@ -4,16 +4,17 @@ import java.util.Scanner;
 
 public class MaxProfit {
     public static void main(String[] args) {
-//        int[] prices = new int[]{9,5,4,7,2,7,2,8,3,9,8,3,2,8,4};
-        System.out.println("enter number with space");
-        Scanner sc = new Scanner(System.in);
-        String a = sc.nextLine();
 
-        String[] str = a.split(" ");
-        int[] prices = new int[str.length];
-        for(int i = 0 ; i < str.length ; i++){
-            prices[i] = Integer.parseInt(str[i]);
+        System.out.println("enter number of days in total");
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+
+        int[] prices = new int[n];
+        for(int i = 0 ; i < prices.length ; i++){
+            System.out.println("enter price "+(i+1));
+            prices[i]=sc.nextInt();
         }
+
         System.out.println("enter the day you are buying");
         int day = sc.nextInt();
         int max = 0;
