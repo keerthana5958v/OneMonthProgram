@@ -11,7 +11,6 @@ public class StringExchange {
     }
     String reverseWordsWithoutSpecialCharacters(String s){
         String specChar = "@!.*#,@#$%^&*()/`~';:\\|][{}><?";
-//        System.out.println(s);
         char lastChar = s.charAt(s.length()-1);
         int count = 1;
         for(int i = 0 ; i < s.length() ; i++){
@@ -39,7 +38,7 @@ public class StringExchange {
                 s = s.substring(0,i) + s.substring(i + 1);
             }
         }
-//        System.out.println("after removing special characters\n"+ s);
+
 
         StringBuilder sb= new StringBuilder();
         String[] rev = s.split(" ");
@@ -58,7 +57,7 @@ public class StringExchange {
             if((symbols[i]!='\0')) {
                 sb.append(symbols[i]);
             }
-            if(i<Math.min(rev.length , symbols.length)-1) {
+            if(i < Math.min(rev.length , symbols.length)-1) {
                 sb.append(" ");
             }
         }
