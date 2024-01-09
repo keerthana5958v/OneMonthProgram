@@ -1,44 +1,42 @@
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
+import java.sql.ResultSet;
 
 public class SignUp{
-
-    void newDoctor(String name, String password , boolean isAvailable){
-        Connection connection;
-        try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/HospitalManagement", "username","password");
-            Statement statement = connection.createStatement();
-            String query;
-            if(isAvailable) {
-                query = "INSERT INTO doctor (name, password , isAvailable) VALUES ('" + name + "','" + password + "','1');";
+    private final DBConnection dbConnection = new DBConnection();
+//    private boolean createNewAccount(String name, String password){
+//        String query = "select * from accounts where username = '"+name+"'and password = '"+password+"';";
+//        try (ResultSet resultSet = dbConnection.fetchValueFromDB(query)){
+//            if(resultSet.next()){
+//                System.out.println("account already exist");
+//                return true;
+//            }
+//            else {
+//                query = "insert into accounts (username, password) values ('"+name+"', password = '"+password+"');";
+//                dbConnection.executeQuery(query);
+//                System.out.println("successfully signed up");
+//            }
+//        }
+//        catch (Exception e){System.out.println(e.getMessage());}
+//        return false;
+//    }
+    public boolean userSignUp(){
+        PasswordChecker ps = new PasswordChecker();
+        Details details = new Details();
+        details.setName(details.readName());
+        String query = "select * from accounts where username = '"+details.getName()+"';";
+        try (ResultSet resultSet = dbConnection.fetchValueFromDB(query)){
+            if(resultSet.next()){
+                System.out.println("account already exist");
+                return true;
             }
-            else{
-                query = "INSERT INTO doctor (name, password , isAvailable) VALUES ('" + name + "','" + password + "','0');";
+            else {
+                query = "INSERT INTO accounts (username, password) VALUES ('" + details.getName() + "', '" + ps.getValidPassword() + "')";
+                dbConnection.executeQuery(query);
+                System.out.println("successfully signed up");
             }
-            statement.executeUpdate(query);
-            System.out.println("successfully signed up");
-        }
-        catch (Exception e){
-            System.out.println("catch");
-            System.out.println(e.getMessage());
-        }
-    }
-    void newPatient(String name, String password , String concern, int appointmentTime){
-        try(Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/HospitalManagement", "username","password")) {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Statement statement = connection.createStatement();
-            String query = "INSERT INTO patient (name, password , concern , appointment_time) VALUES ('" + name + "','" + password + "','"+concern+"','"+appointmentTime+"');";
-            statement.executeUpdate(query);
-            System.out.println("successfully signed up");
         }
         catch (Exception e){System.out.println(e.getMessage());}
+        return false;
+
     }
 
-    public static void main(String[] args) {
-        SignUp obj = new SignUp();
-        obj.newPatient("patient7","password", "stomach pain" , 7);
-    }
 }
